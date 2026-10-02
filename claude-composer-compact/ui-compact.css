@@ -1,0 +1,287 @@
+/* Compact composer footer for the Claude Code panel (2.1.258+).
+ *
+ * 2.1.258 added two 9999px-radius pills to the composer footer, both sized
+ * `padding:4px 16px; font-size:1em; min-height:26px`:
+ *   - the model selector  (`modelPill_<hash>`, or `modelPillRow_` on narrow panels)
+ *   - the Remote Control  (`pill_<hash> pillOn_<hash> pillLink_<hash>`, blue #4a63af fill)
+ * They dwarf the ghost icon buttons next to them. This sheet re-fits both to
+ * the footer's own scale: borders-only, no fills, icon-only for Remote Control
+ * (the official CSS already does icon-only at data-fit-stage 1/2, so the
+ * tooltip/aria-label remain the label).
+ *
+ * Icon scale: every official footer icon button is a 26x26 box whose svg is
+ * also 26x26 (`.menuButton svg`, `.footerButton svg`, `.usageButtonV2 svg`);
+ * the artwork sits in a 20-unit viewBox and spans ~11 units, i.e. ~14px on
+ * screen. So icon-only controls here (Remote Control, and the model pill when
+ * collapsed) use the same 26px box + 26px svg; the Claude logo (fills its
+ * 24-unit viewBox) is drawn at 15px to read the same size as its neighbours.
+ * The TEXT model pill stays a tighter 22px bordered box.
+ *
+ * Narrow panels: the footer measures its direct children and escalates
+ * `data-fit-stage` 0 -> 1 -> 2 while the sum of their widths overflows
+ * (vl0/g30 in the bundle; stage 2 moves the model pill to its own row). At
+ * stage 1 we collapse the model pill to the Claude-logo icon. patch.mjs keeps
+ * the same button inside the footer at stage 2 as well, so narrow panels never
+ * send it to an unstyled sibling row.
+ * The logo is the extension's own resources/claude-logo.svg, inlined by
+ * patch.mjs as a data: URI into __CC_CLAUDE_LOGO__ and drawn with CSS mask so
+ * it takes the button's currentColor (CSP: img-src data: covers mask-image).
+ * Do NOT clip the pill's text with max-width/overflow:hidden here — the fit
+ * logic treats internal clipping as "does not fit" and escalates.
+ *
+ * Selectors use partial class matches (`[class*="modelPill_"]`) because the
+ * css-module hash suffix changes on extension updates.
+ *
+ * Tunables live on :root below — edit here, bump PATCH_VERSION, `node patch.mjs`.
+ */
+:root {
+  --cc-pill-h: 22px;          /* height of the TEXT model pill */
+  --cc-pill-radius: 5px;      /* matches menuButton / footerButton radius */
+  --cc-pill-font: .85em;      /* matches footerButton text */
+  --cc-icon-h: 26px;          /* box of icon-only controls = official menuButton */
+  --cc-icon-svg: 26px;        /* svg size inside that box = official `.menuButton svg` */
+  --cc-remote-on: rgba(91, 141, 239, .95);   /* Remote Control connected/connecting */
+  --cc-model-icon-size: 15px;                /* Claude logo inside the collapsed model pill */
+  --cc-agents-icon-size: 16px;               /* agent-map glyph inside its 26px box */
+  --cc-model-icon-color: currentColor;       /* set to #D97757 for the brand orange */
+}
+
+/* Keep the send/stop action above neighbouring controls and reserve its
+   complete hit area. The permission selector's wrapper otherwise shrinks
+   below its 26px icon and paints over the send button on narrow panels. */
+[class*="inputFooter"] > [class*="sendButton_"] {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 0 0 var(--cc-icon-h) !important;
+  min-width: var(--cc-icon-h) !important;
+}
+[class*="inputFooter"] > :has(> button[class*="footerButtonPrimary_"]) {
+  flex-shrink: 0 !important;
+  min-width: var(--cc-icon-h) !important;
+}
+
+/* Let the selected filename take only the remaining space. Retain its
+   original title and remove button while truncating the visible label. */
+[class*="inputFooter"] > [class*="selectionChip_"] {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+}
+[class*="inputFooter"] [class*="selectionChip_"] [class*="footerButtonStatic_"] {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+[class*="inputFooter"] [class*="selectionChip_"] [class*="footerButtonStatic_"] > span {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* At the final fit stage, keep attach/model/mode/send in the first row and
+   disclose the other original controls with an ellipsis. No cloned actions
+   or reparented React nodes: open menus still use their real button anchors. */
+.cc-footer-more {
+  display: none;
+  flex: 0 0 var(--cc-icon-h);
+  width: var(--cc-icon-h);
+  height: var(--cc-icon-h);
+  padding: 0;
+  border: 0;
+  border-radius: var(--cc-pill-radius);
+  background: transparent;
+  color: var(--app-primary-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 20px;
+  line-height: 1;
+}
+.cc-footer-more:hover {
+  background: var(--app-ghost-button-hover-background);
+}
+[class*="inputFooter"][data-fit-stage="2"] {
+  position: relative;
+  padding-right: 37px;
+}
+[class*="inputFooter"][data-fit-stage="2"] > [class*="sendButton_"] {
+  position: absolute !important;
+  right: 5px;
+  top: 5px;
+}
+[class*="inputFooter"][data-fit-stage="2"] > .cc-footer-more {
+  display: block;
+}
+[class*="inputFooter"][data-fit-stage="2"]:not([data-cc-more-open]) > [data-cc-secondary] {
+  display: none !important;
+}
+[class*="inputFooter"][data-fit-stage="2"][data-cc-more-open] {
+  flex-wrap: wrap;
+}
+[class*="inputFooter"][data-fit-stage="2"][data-cc-more-open]::after {
+  content: "";
+  order: 1;
+  flex-basis: 100%;
+}
+[class*="inputFooter"][data-fit-stage="2"][data-cc-more-open] > [data-cc-secondary] {
+  order: 2;
+  max-width: 100%;
+}
+[class*="inputFooter"][data-fit-stage="2"] > [class*="divider_"] {
+  display: none !important;
+}
+
+/* ---- model selector ---------------------------------------------------- */
+[class*="inputFooter"] [class*="modelPill_"],
+[class*="modelPillRow_"] [class*="modelPill_"] {
+  min-height: 0 !important;
+  height: var(--cc-pill-h) !important;
+  box-sizing: border-box !important;
+  padding: 0 7px !important;
+  margin-left: 2px !important;
+  border-radius: var(--cc-pill-radius) !important;
+  border: 1px solid var(--app-input-border) !important;
+  background: transparent !important;
+  color: var(--app-secondary-foreground) !important;
+  font-size: var(--cc-pill-font) !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+}
+[class*="inputFooter"] [class*="modelPill_"] span,
+[class*="modelPillRow_"] [class*="modelPill_"] span {
+  line-height: 1 !important;
+}
+[class*="inputFooter"] [class*="modelPill_"]:hover,
+[class*="modelPillRow_"] [class*="modelPill_"]:hover,
+[class*="inputFooter"] [class*="modelPill_"][aria-expanded="true"],
+[class*="modelPillRow_"] [class*="modelPill_"][aria-expanded="true"] {
+  color: var(--app-primary-foreground) !important;
+  background: var(--app-ghost-button-hover-background) !important;
+  border-color: color-mix(in srgb, var(--app-input-border) 60%, var(--app-primary-foreground)) !important;
+}
+[class*="modelPillRow_"] {
+  padding: 0 5px 4px !important;
+}
+
+/* narrow panel (fit-stage 1+): model pill -> Claude-logo icon in the same
+   26px ghost box as the neighbouring icon buttons. The model name stays in
+   the tooltip (ui-compact.js mirrors it into `title`).
+
+   IMPORTANT (v48): the agent-map button reuses the model pill's class —
+   `className:`${Y7.modelPill} ${Ly.agentsPill}`` — so `[class*="modelPill_"]`
+   matches it too and it was being masked into a second Claude logo, hiding its
+   own icon. Every collapse rule below therefore excludes `agentsPill`. The
+   sizing rules further up intentionally still apply, so the agent map keeps the
+   same compact box as its neighbours. */
+[class*="inputFooter"][data-fit-stage="1"] [class*="modelPill_"]:not([class*="agentsPill"]),
+[class*="inputFooter"][data-fit-stage="2"] [class*="modelPill_"]:not([class*="agentsPill"]) {
+  width: var(--cc-icon-h) !important;
+  height: var(--cc-icon-h) !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  border-color: transparent !important;
+}
+[class*="inputFooter"][data-fit-stage="1"] [class*="modelPill_"]:not([class*="agentsPill"]):hover,
+[class*="inputFooter"][data-fit-stage="2"] [class*="modelPill_"]:not([class*="agentsPill"]):hover,
+[class*="inputFooter"][data-fit-stage="1"] [class*="modelPill_"]:not([class*="agentsPill"])[aria-expanded="true"],
+[class*="inputFooter"][data-fit-stage="2"] [class*="modelPill_"]:not([class*="agentsPill"])[aria-expanded="true"] {
+  border-color: transparent !important;
+}
+[class*="inputFooter"][data-fit-stage="1"] [class*="modelPill_"]:not([class*="agentsPill"]) span,
+[class*="inputFooter"][data-fit-stage="2"] [class*="modelPill_"]:not([class*="agentsPill"]) span {
+  display: none !important;
+}
+[class*="inputFooter"][data-fit-stage="1"] [class*="modelPill_"]:not([class*="agentsPill"])::before,
+[class*="inputFooter"][data-fit-stage="2"] [class*="modelPill_"]:not([class*="agentsPill"])::before {
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  width: var(--cc-model-icon-size);
+  height: var(--cc-model-icon-size);
+  background-color: var(--cc-model-icon-color);
+  -webkit-mask: url("__CC_CLAUDE_LOGO__") center / contain no-repeat;
+  mask: url("__CC_CLAUDE_LOGO__") center / contain no-repeat;
+}
+
+/* ---- agent map (v49) ---------------------------------------------------- */
+/* The agent-map button ships as a wide text pill (`<span class="icon_">svg</span>
+   <dot/><span class="label_">Agents</span>`) that reuses the model pill's class.
+   Left at full width it pushes the footer over its fit budget, the model pill is
+   exiled to `modelPillRow` on a second line, and the whole footer reads as
+   clutter. Collapse it to icon-only at every stage — same 26px ghost box as the
+   menu buttons and Remote Control — and let its own glyph show (NOT the Claude
+   logo; the mask rules above exclude it). The status dot stays visible. The
+   label survives in the tooltip, which the official code already sets. */
+[class*="inputFooter"] [class*="agentsPill"] {
+  width: var(--cc-icon-h) !important;
+  height: var(--cc-icon-h) !important;
+  min-width: var(--cc-icon-h) !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+  gap: 0 !important;
+  justify-content: center !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  position: relative !important;
+}
+[class*="inputFooter"] [class*="agentsPill"] [class^="label_"] {
+  display: none !important;
+}
+[class*="inputFooter"] [class*="agentsPill"] [class^="icon_"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: var(--cc-agents-icon-size) !important;
+  height: var(--cc-agents-icon-size) !important;
+  margin: 0 !important;
+}
+[class*="inputFooter"] [class*="agentsPill"] [class^="icon_"] svg {
+  width: var(--cc-agents-icon-size) !important;
+  height: var(--cc-agents-icon-size) !important;
+}
+/* The real dot has `statusDot_<hash> statusDotRunning_<hash> dot_<hash>`.
+   Prefix matching misses it and the 6px dot overflows the button, forcing
+   the official fit measurement to stage 2 even on a wide panel. */
+[class*="inputFooter"] [class*="agentsPill"] [class*="dot_"] {
+  position: absolute !important;
+  top: 3px !important;
+  right: 3px !important;
+  margin: 0 !important;
+}
+
+/* ---- Remote Control ---------------------------------------------------- */
+/* F$0 renders <a|span class="pill_x pillOn_x pillLink_x"> as a DIRECT child of
+   the footer, so `>` + class^= keeps attachment chips (pill_<other>) out.
+   Box and svg match the official menuButton (26px / 26px) so the glyph reads
+   the same size as "+", "/" and the usage ring. */
+[class*="inputFooter"] > [class^="pill_"] {
+  min-height: 0 !important;
+  height: var(--cc-icon-h) !important;
+  width: var(--cc-icon-h) !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  justify-content: center !important;
+  border-radius: var(--cc-pill-radius) !important;
+  background: transparent !important;
+  color: var(--app-secondary-foreground) !important;   /* error state (no pillOn) */
+  filter: none !important;
+}
+[class*="inputFooter"] > [class^="pill_"] svg {
+  display: block !important;
+  width: var(--cc-icon-svg) !important;
+  height: var(--cc-icon-svg) !important;
+  margin: 0 !important;
+}
+[class*="inputFooter"] > [class^="pill_"] span {
+  display: none !important;
+}
+[class*="inputFooter"] > [class^="pill_"][class*="pillOn"] {
+  color: var(--cc-remote-on) !important;                 /* connected / connecting */
+}
+[class*="inputFooter"] > [class^="pill_"]:not([class*="pillOn"]) {
+  color: var(--app-error-foreground) !important;         /* error */
+}
+[class*="inputFooter"] > [class^="pill_"][class*="pillLink"]:hover {
+  background: var(--app-ghost-button-hover-background) !important;
+  color: var(--cc-remote-on) !important;
+}

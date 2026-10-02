@@ -1,12 +1,16 @@
-# Cursor Codex patches
+# Cursor Codex + Claude Code patches
 
-CursorでCodexを使う際の、入力欄と複数タブの使い勝手を改善する非公式パッチ集です。
+CursorでCodex・Claude Codeを使う際の、入力欄と複数タブの使い勝手を改善する非公式パッチ集です。
 
 ## できること
 
 - **入力欄の位置調整**: 「ローカルで作業」などの操作行を入力欄の上へ移し、入力欄の最小高さを縮めます。複数行入力は伸びます。
 - **独立した複数タブ**: `Codex: New Codex Agent` から毎回別のCodexタブを開き、左右・上下のエディタグループに並べられます。
 - **ヘッダー調整**: 履歴・新規チャットを細線の時計・丸い＋アイコンに整えます。
+
+- **Claude Codeの入力欄整理**: モデル・Agents・Remote Controlを小さくまとめ、狭い幅では補助操作を「…」に畳みます。[使い方](claude-composer-compact/README.md)（Claude Code 2.1.286専用）。
+
+以下はCodex用の手順です。Claude Code用は上記リンクを参照してください。
 
 ## 対応環境
 
