@@ -1,0 +1,68 @@
+{
+  "name": "claude-usage-bar",
+  "displayName": "Claude Usage",
+  "description": "Show Claude and Codex usage together in the primary sidebar",
+  "publisher": "local",
+  "version": "0.4.0",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "claudeUsageView",
+          "name": "Claude Usage",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "claudeUsage.refresh",
+        "title": "Claude Usage: Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "claudeUsage.refresh",
+          "when": "view == claudeUsageView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Claude Usage",
+      "properties": {
+        "claudeUsageBar.refreshIntervalSeconds": {
+          "type": "number",
+          "default": 120,
+          "minimum": 60,
+          "description": "Auto-refresh interval in seconds (minimum 60)"
+        },
+        "claudeUsageBar.codexExecutablePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "restricted": true,
+          "description": "Absolute path to the Codex CLI. Leave empty to detect a standard macOS installation."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asiro-Marketing/cursor-codex-patches.git",
+    "directory": "extensions/claude-usage-bar"
+  }
+}

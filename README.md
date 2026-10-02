@@ -1,6 +1,10 @@
-# Cursor Codex + Claude Code patches
+# Cursor toolkit
 
-CursorでCodex・Claude Codeを使う際の、入力欄と複数タブの使い勝手を改善する非公式パッチ集です。
+Cursorで使用している自作拡張6本と、Codex・Claude Codeの改善パッチ集です。
+
+**[収録一覧・拡張のインストール方法](TOOLKIT.md)**
+
+Claudeのマスコット・添付・入力欄整理をまとめて使う場合は **[Claude Code full patch](claude-code-full/README.md)** を参照してください。入力欄単独版とは併用しません。
 
 ## できること
 

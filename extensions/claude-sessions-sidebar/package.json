@@ -1,0 +1,104 @@
+{
+  "name": "claude-sessions-sidebar",
+  "displayName": "Claude Sessions",
+  "description": "Live Claude Code session lanes (Needs input / Working / Recent) in the sidebar, Arc-style",
+  "publisher": "local",
+  "version": "0.3.1",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claude-sessions",
+          "title": "Claude Sessions",
+          "icon": "media/claude-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "claude-sessions": [
+        {
+          "id": "claudeSessions",
+          "name": "Sessions",
+          "type": "webview"
+        }
+      ],
+      "explorer": [
+        {
+          "id": "claudeSessionsExplorer",
+          "name": "Claude Sessions",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "claudeSessions.refresh",
+        "title": "Refresh Sessions",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "claudeSessions.resume",
+        "title": "Resume Session"
+      },
+      {
+        "command": "claudeSessions.delete",
+        "title": "Delete Session",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "claudeSessions.continue",
+        "title": "Continue Most Recent",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "claudeSessions.refresh",
+          "when": "view == claudeSessions || view == claudeSessionsExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "claudeSessions.continue",
+          "when": "view == claudeSessions || view == claudeSessionsExplorer",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Claude Sessions",
+      "properties": {
+        "claudeSessions.maxSessions": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum number of sessions to display per project"
+        },
+        "claudeSessions.showAllProjects": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show sessions from all projects (true) or only current workspace (false). Live lanes are only shown when this is false."
+        },
+        "claudeSessions.pollingInterval": {
+          "type": "number",
+          "default": 2500,
+          "minimum": 1000,
+          "description": "Polling interval in milliseconds for live session status (Needs input / Working). Minimum 1000."
+        },
+        "claudeSessions.maxRecentSessions": {
+          "type": "number",
+          "default": 15,
+          "description": "Number of recent (non-live) sessions shown in the Recent sessions group"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asiro-Marketing/cursor-codex-patches.git",
+    "directory": "extensions/claude-sessions-sidebar"
+  }
+}
