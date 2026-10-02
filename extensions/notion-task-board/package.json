@@ -1,0 +1,80 @@
+{
+  "name": "notion-task-board",
+  "displayName": "Notion Task Board",
+  "description": "Notion タスク管理DBをサイドバーに表示するタスクボード",
+  "publisher": "local",
+  "version": "0.7.6",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "activationEvents": [
+    "onView:notionTaskBoard"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "notion-task-board",
+          "title": "Notion Tasks",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "notion-task-board": [
+        {
+          "type": "webview",
+          "id": "notionTaskBoard",
+          "name": "タスクボード"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "notionTaskBoard.refresh",
+        "title": "Notion Tasks: Refresh",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "notionTaskBoard.refresh",
+          "when": "view == notionTaskBoard",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Notion Task Board",
+      "properties": {
+        "notionTaskBoard.token": {
+          "type": "string",
+          "default": "",
+          "description": "Notion Integration Token"
+        },
+        "notionTaskBoard.databaseId": {
+          "type": "string",
+          "default": "",
+          "description": "Notion Database ID"
+        },
+        "notionTaskBoard.refreshInterval": {
+          "type": "number",
+          "default": 300,
+          "description": "自動更新間隔（秒）"
+        },
+        "notionTaskBoard.assigneeUserId": {
+          "type": "string",
+          "default": "",
+          "description": "担当者フィルタ用のNotion User ID。空欄にすると全員のタスクを表示"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asiro-Marketing/cursor-codex-patches.git",
+    "directory": "extensions/notion-task-board"
+  }
+}

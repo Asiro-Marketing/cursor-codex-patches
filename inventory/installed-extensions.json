@@ -1,0 +1,185 @@
+{
+  "captured": "2026-10-02",
+  "extensions": [
+    {
+      "id": "pixl-garden.bongocat",
+      "version": "0.0.2",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "oderwat.indent-rainbow",
+      "version": "8.3.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "mechatroner.rainbow-csv",
+      "version": "3.24.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "formulahendry.auto-rename-tag",
+      "version": "0.1.10",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "naumovs.color-highlight",
+      "version": "2.8.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "ibm.output-colorizer",
+      "version": "0.1.2",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "catppuccin.catppuccin-vsc-icons",
+      "version": "1.26.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "pkief.material-product-icons",
+      "version": "1.7.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "castrogusttavo.symbols",
+      "version": "0.0.18",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "local.file-colorizer",
+      "version": "0.8.0",
+      "source": "extensions/file-colorizer"
+    },
+    {
+      "id": "miguelsolorio.fluent-icons",
+      "version": "0.0.19",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "wilfriedago.vscode-symbols-icon-theme",
+      "version": "0.0.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "pouya.theme-karyfoundation-themes",
+      "version": "35.0.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "dracula-theme.theme-dracula",
+      "version": "2.25.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "jaakko.black",
+      "version": "0.12.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "wicked-labs.sequoia",
+      "version": "0.10.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "shahadishraq.vscode-claude-sessions",
+      "version": "0.3.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "local.claude-chat",
+      "version": "0.1.0",
+      "source": "extensions/claude-chat"
+    },
+    {
+      "id": "local.notion-task-board",
+      "version": "0.7.6",
+      "source": "extensions/notion-task-board"
+    },
+    {
+      "id": "local.screen-agent-cursor",
+      "version": "0.8.1",
+      "source": "extensions/screen-agent-cursor"
+    },
+    {
+      "id": "local.claude-sessions-sidebar",
+      "version": "0.3.1",
+      "source": "extensions/claude-sessions-sidebar"
+    },
+    {
+      "id": "ms-python.debugpy",
+      "version": "2026.6.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "ms-python.python",
+      "version": "2025.6.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "anysphere.cursorpyright",
+      "version": "1.0.12",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "travis.simple-dark",
+      "version": "1.6.3",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "ms-ceintl.vscode-language-pack-ja",
+      "version": "1.128.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "davidanson.vscode-markdownlint",
+      "version": "0.62.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "ms-vscode.live-server",
+      "version": "0.4.20",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "pkief.material-icon-theme",
+      "version": "5.38.1",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "openai.chatgpt",
+      "version": "26.5908.31748",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "local.claude-usage-bar",
+      "version": "0.4.0",
+      "source": "extensions/claude-usage-bar"
+    },
+    {
+      "id": "anysphere.remote-ssh",
+      "version": "1.1.16",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "tahayvr.matteblack",
+      "version": "1.0.4",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "usernamehw.errorlens",
+      "version": "3.29.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "vscode-icons-team.vscode-icons",
+      "version": "13.0.0",
+      "source": "extension-marketplace"
+    },
+    {
+      "id": "anthropic.claude-code",
+      "version": "2.1.286",
+      "source": "extension-marketplace"
+    }
+  ]
+}

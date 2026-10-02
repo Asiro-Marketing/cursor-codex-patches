@@ -1,0 +1,211 @@
+{
+  "name": "file-colorizer",
+  "displayName": "File Colorizer",
+  "description": "Colorize explorer file/folder names by extension or folder name",
+  "publisher": "local",
+  "version": "0.8.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "colors": [
+      {
+        "id": "fileColorizer.md",
+        "description": "Markdown files",
+        "defaults": {
+          "dark": "#85c1dc",
+          "light": "#209fb5"
+        }
+      },
+      {
+        "id": "fileColorizer.json",
+        "description": "JSON files",
+        "defaults": {
+          "dark": "#e5c890",
+          "light": "#df8e1d"
+        }
+      },
+      {
+        "id": "fileColorizer.js",
+        "description": "JavaScript files",
+        "defaults": {
+          "dark": "#e5c890",
+          "light": "#df8e1d"
+        }
+      },
+      {
+        "id": "fileColorizer.ts",
+        "description": "TypeScript files",
+        "defaults": {
+          "dark": "#8caaee",
+          "light": "#1e66f5"
+        }
+      },
+      {
+        "id": "fileColorizer.py",
+        "description": "Python files",
+        "defaults": {
+          "dark": "#8caaee",
+          "light": "#1e66f5"
+        }
+      },
+      {
+        "id": "fileColorizer.sh",
+        "description": "Shell files",
+        "defaults": {
+          "dark": "#a6d189",
+          "light": "#40a02b"
+        }
+      },
+      {
+        "id": "fileColorizer.txt",
+        "description": "Text files",
+        "defaults": {
+          "dark": "#c6d0f5",
+          "light": "#4c4f69"
+        }
+      },
+      {
+        "id": "fileColorizer.html",
+        "description": "HTML files",
+        "defaults": {
+          "dark": "#ef9f76",
+          "light": "#fe640b"
+        }
+      },
+      {
+        "id": "fileColorizer.css",
+        "description": "CSS files",
+        "defaults": {
+          "dark": "#ca9ee6",
+          "light": "#8839ef"
+        }
+      },
+      {
+        "id": "fileColorizer.yaml",
+        "description": "YAML files",
+        "defaults": {
+          "dark": "#e78284",
+          "light": "#d20f39"
+        }
+      },
+      {
+        "id": "fileColorizer.depth.1",
+        "description": "Folder depth 1",
+        "defaults": {
+          "dark": "#f8f8f2",
+          "light": "#4c4f69"
+        }
+      },
+      {
+        "id": "fileColorizer.depth.2",
+        "description": "Folder depth 2",
+        "defaults": {
+          "dark": "#dee0dc",
+          "light": "#5c5f77"
+        }
+      },
+      {
+        "id": "fileColorizer.depth.3",
+        "description": "Folder depth 3",
+        "defaults": {
+          "dark": "#c4c6c2",
+          "light": "#6c6f85"
+        }
+      },
+      {
+        "id": "fileColorizer.depth.4",
+        "description": "Folder depth 4",
+        "defaults": {
+          "dark": "#a9aba8",
+          "light": "#7c7f93"
+        }
+      },
+      {
+        "id": "fileColorizer.depth.5",
+        "description": "Folder depth 5+",
+        "defaults": {
+          "dark": "#8f918e",
+          "light": "#8c8fa1"
+        }
+      }
+    ],
+    "configuration": {
+      "title": "File Colorizer",
+      "properties": {
+        "fileColorizer.rules": {
+          "type": "array",
+          "default": [
+            {
+              "ext": ".md",
+              "color": "fileColorizer.md"
+            },
+            {
+              "ext": ".json",
+              "color": "fileColorizer.json"
+            },
+            {
+              "ext": ".js",
+              "color": "fileColorizer.js"
+            },
+            {
+              "ext": ".mjs",
+              "color": "fileColorizer.js"
+            },
+            {
+              "ext": ".ts",
+              "color": "fileColorizer.ts"
+            },
+            {
+              "ext": ".tsx",
+              "color": "fileColorizer.ts"
+            },
+            {
+              "ext": ".py",
+              "color": "fileColorizer.py"
+            },
+            {
+              "ext": ".sh",
+              "color": "fileColorizer.sh"
+            },
+            {
+              "ext": ".txt",
+              "color": "fileColorizer.txt"
+            },
+            {
+              "ext": ".html",
+              "color": "fileColorizer.html"
+            },
+            {
+              "ext": ".css",
+              "color": "fileColorizer.css"
+            },
+            {
+              "ext": ".yaml",
+              "color": "fileColorizer.yaml"
+            },
+            {
+              "ext": ".yml",
+              "color": "fileColorizer.yaml"
+            }
+          ],
+          "description": "Array of { ext, color } rules mapping file extensions to theme color IDs"
+        },
+        "fileColorizer.folderRules": {
+          "type": "array",
+          "default": [],
+          "description": "Array of { name, color } rules mapping folder names to theme color IDs"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asiro-Marketing/cursor-codex-patches.git",
+    "directory": "extensions/file-colorizer"
+  }
+}

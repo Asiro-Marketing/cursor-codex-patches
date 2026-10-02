@@ -1,0 +1,66 @@
+{
+  "name": "screen-agent-cursor",
+  "displayName": "Screen Agent",
+  "description": "Claude Code chat tabs inside Cursor — parallel, editor-panel based",
+  "publisher": "local",
+  "version": "0.8.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "screenAgent.newChat",
+        "title": "Screen Agent: New Chat",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "screenAgent.sendSelection",
+        "title": "Screen Agent: Ask about selection"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "screenAgent.newChat",
+        "key": "cmd+shift+a",
+        "mac": "cmd+shift+a"
+      },
+      {
+        "command": "screenAgent.sendSelection",
+        "key": "cmd+shift+l",
+        "mac": "cmd+shift+l",
+        "when": "editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "screenAgent.sendSelection",
+          "when": "editorHasSelection",
+          "group": "screen-agent"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "screenAgent.newChat"
+        },
+        {
+          "command": "screenAgent.sendSelection",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "marked": "^14.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asiro-Marketing/cursor-codex-patches.git",
+    "directory": "extensions/screen-agent-cursor"
+  }
+}
