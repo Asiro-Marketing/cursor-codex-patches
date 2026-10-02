@@ -1,0 +1,14 @@
+/* Local adjustment for Codex 26.5908.31748 in Cursor. */
+/* Keep the location selector accessible, above the existing chat composer. */
+[data-codex-window-type="extension"]
+[data-codex-composer-root][data-composer-placement="thread"]
+div.flex.flex-col > div:has(> ._ComposerFooter_q5yh8_1) {
+  order: -1;
+}
+
+/* Reduce only the minimum height; multiline drafts can still grow. */
+[data-codex-window-type="extension"]
+[data-codex-composer-root][data-composer-placement="thread"]
+._ComposerLayoutRoot_1qpwu_2 {
+  --min-height-composer: 24px;
+}
