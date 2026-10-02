@@ -1,0 +1,10 @@
+{
+  "name": "claude-composer-compact-tests",
+  "private": true,
+  "scripts": {
+    "test": "node test-patch.mjs && node test-footer.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}
